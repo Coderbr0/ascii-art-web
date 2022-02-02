@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascii Art</title>
+</head>
+<body>
+    <form method="POST">
+        <br>
+        <label for = "text" id= "a">Text:</label> 
+        
+        <textarea name="asciiInput" id="asciiInput" cols="30" rows="5" placeholder="Insert Text Here"></textarea>
+        <br><br>
+
+        <label for="banner">Choose a banner:</label>
+        <select id="banner" name="banner">
+         <option value ="choose a banner"></option>
+          <option value="shadow.txt">shadow</option>
+          <option value="standard.txt">standard</option>
+          <option value="thinkertoy.txt">thinkertoy</option>
+        </select>
+        <input type="submit" autocomplete="off">
+      </form>
+      <div><pre>{{.}}</pre></div>
+</body>
+</html>
