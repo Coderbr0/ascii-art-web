@@ -32,7 +32,7 @@ func ReadFile(banner string) map[int][]string {
 
 func outputAscii(asciiMap map[int][]string, input string) string {
 	var output string
-	inputSlice := strings.Split(input, "\\n")
+	inputSlice := strings.Split(input, "\r\n")
 	for _, input = range inputSlice {
 		for i := 0; i < 8; i++ {
 			for _, inputChar := range input {
@@ -73,4 +73,5 @@ func main() {
 		log.Fatalf("500 internal server error : %s", err.Error())
 	}
 }
+
 /*When writing new line in text box index is out of range*/
