@@ -15,6 +15,6 @@ It can handle the carriage return \r as well as the newline character \n and can
 - 500: internal server error for unhandled errors.
 
 # Authors
-Karolis Milius
-Coderbro
-Maddina
+* Karolis Milius
+* Coderbro
+* Maddina
