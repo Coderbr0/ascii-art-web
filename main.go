@@ -54,15 +54,44 @@ func asciiGen(input string, banner string) string {
 
 func ascii(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
-		tmpl, _ := template.ParseFiles("templates/index.html")
-		tmpl.Execute(w, nil)
+		tmpl, err := template.ParseFiles("templates/index.html")
+		if err != nil {
+			fmt.Fprintf(w, "404 file not found: %s", err.Error())
+		} else {
+			tmpl.Execute(w, nil)
+		}
 	} else {
 		r.ParseForm()
 		asciiInput := r.Form["asciiInput"]
 		asciiBanner := r.Form["banner"]
-		asciiRaw := asciiGen(asciiInput[0], asciiBanner[0])
-		tmpl, _ := template.ParseFiles("templates/index.html")
-		tmpl.Execute(w, asciiRaw)
+		asciiBanner = append(asciiBanner, "") // Append as with if statement we would get index out of range error
+		asciiInput = append(asciiInput, "")   // Append as with if statement we would get index out of range error
+		if asciiBanner[0] == "" || asciiInput[0] == "" {
+			tmpl, err := template.ParseFiles("templates/index.html")
+			if err != nil {
+				fmt.Fprintf(w, "404 file not found: %s", err.Error())
+			} else {
+				tmpl.Execute(w, fmt.Sprint("400 bad request"))
+			}
+		} else {
+			asciiRaw := asciiGen(asciiInput[0], asciiBanner[0])
+			if asciiRaw != "" {
+				tmpl, err := template.ParseFiles("templates/index.html")
+				if err != nil {
+					fmt.Fprintf(w, "404 file not found: %s", err.Error())
+				} else {
+					tmpl.Execute(w, asciiRaw)
+					fmt.Println("200 OK") // tmpl.Execute(w, asciiRaw) works, so we have fmt.Println("200 OK") here
+				}
+			} else {
+				tmpl, err := template.ParseFiles("templates/index.html")
+				if err != nil {
+					fmt.Fprintf(w, "404 file not found: %s", err.Error())
+				} else {
+					tmpl.Execute(w, fmt.Sprintf("500 internal server error : %s", err.Error()))
+				}
+			}
+		}
 	}
 }
 
